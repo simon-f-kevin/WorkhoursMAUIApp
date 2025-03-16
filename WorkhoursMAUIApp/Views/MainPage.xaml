@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WorkhoursMAUIApp.Views.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Image
+                Source="dotnet_bot.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a race car number eight" />
+
+            <Label x:Name="WorkdayStart_Label" Text="Stämplade in:"/>
+            <Entry x:Name="WorkdayStart"
+                Placeholder="Stämplade in"
+                Completed="ValidateTimeField"
+                Unfocused="ValidateTimeField"/>
+            <Label x:Name="LunchStart_Label" Text="Lunch start:"/>
+            <Entry x:Name="LunchStart"
+                Placeholder="Lunch start"
+                Completed="ValidateTimeField"
+                Unfocused="ValidateTimeField"/>
+            <Label x:Name="LunchEnd_Label" Text="Lunch slut:"/>
+            <Entry x:Name="LunchEnd"
+                Placeholder="Lunch slut"
+                Completed="ValidateTimeField"
+                Unfocused="ValidateTimeField"/>
+            <Label x:Name="WorkdayEnd_Label" Text="Stämplade ut:"/>
+            <Entry x:Name="WorkdayEnd"
+                Placeholder="Stämplade ut"
+                Completed="ValidateTimeField"
+                Unfocused="ValidateTimeField"/>
+            <Button
+                x:Name="SubmitTimesBtn"
+                Text="Beep beep boop boop, beep beep boop boop!" 
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="OnSubmitTimesBtnClicked"
+                HorizontalOptions="Fill" />
+            
+            <Label
+                x:Name="HoursWorked"
+                Text="Timmar arbetade:"
+                Style="{StaticResource SubHeadline}" />
+            <Label x:Name="MinutesLunch"
+                Text="Lunchminuter: "
+                Style="{StaticResource SubHeadline}"/>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
