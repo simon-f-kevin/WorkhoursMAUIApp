@@ -1,25 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="WorkhoursMAUIApp.Views.MainPage"
+             x:Class="WorkhoursMAUIApp.Views.WeekPage"
              xmlns:models="clr-namespace:WorkhoursMAUIApp.Models">
     <ScrollView>
         <VerticalStackLayout>
-            <Button
-                x:Name="CreateWeekBtn"
-                Text="Lägg till vecka" 
-                Clicked="OnCreateWeekBtnClicked"
-                HorizontalOptions="Fill" />
             <CollectionView 
-                    ItemsSource="{Binding WeekItems}"
+                    ItemsSource="{Binding Workdays}"
                     SelectionMode="Single"
-                    SelectionChanged="OnWeekSelected"
-                    EmptyView="No weeks yet" >
+                    SelectionChanged="OnDaySelected" >
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:WeekItem">
+                        <DataTemplate x:DataType="models:DayItem">
                             <VerticalStackLayout Margin="15">
                                 <Label Text="{Binding Name}" />
-                                <Label Text="{Binding TotalHoursWorkedText}" />
+                                <Label Text="{Binding TimeWorkedDisplayText}" />
                             </VerticalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -28,5 +22,4 @@
         
     </ScrollView>
     
-
 </ContentPage>

@@ -1,83 +1,72 @@
-﻿namespace WorkhoursMAUIApp;
+﻿using System.Collections.ObjectModel;
+using Windows.System;
+using WorkhoursMAUIApp.Data;
+using WorkhoursMAUIApp.Models;
+using WorkhoursMAUIApp.ViewModels;
+
+namespace WorkhoursMAUIApp.Views;
 
 public partial class MainPage : ContentPage
 {
-	TimeOnly _workDayStart = TimeOnly.MinValue;
-	TimeOnly _workDayEnd = TimeOnly.MinValue;
-	TimeOnly _lunchStart = TimeOnly.MinValue;
-	TimeOnly _lunchEnd = TimeOnly.MinValue;
+    private readonly IWorkhoursRepository<DayItem> _workdayRepository;
+	private readonly WeekRepository _weekRepository;
 
-	public MainPage()
+    public ObservableCollection<WeekItem> WeekItems { get; set; } = new ObservableCollection<WeekItem>();
+
+	public MainPage(IWorkhoursRepository<DayItem> workdayRepository, IWorkhoursRepository<WeekItem> weekRepository)
 	{
 		InitializeComponent();
-	}
+		BindingContext = this;
+		// WeekItems.Add(new WeekItem(1) { TotalHours = 40 });
+		_workdayRepository = workdayRepository;
+		_weekRepository = (WeekRepository)weekRepository;
+    }
 
-	public async void ValidateTimeField(object sender, EventArgs e)
+	protected override void OnNavigatedTo(NavigatedToEventArgs args)
 	{
-		if (sender is Entry senderEntry)
+		var weekItems = _weekRepository.GetAll();
+		if (!weekItems.Any())
 		{
-			var timeText = senderEntry.Text;
-			TimeOnly currentValue = TimeOnly.MinValue;
-			var dotFormatValidResult = TimeOnly.TryParseExact(timeText, "HH.mm", null, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out var _currentValueDot);
-			var colonFormatValidResult = TimeOnly.TryParseExact(timeText, "HH:mm", null, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out var _currentValueColon);
-			var generalValidResult = TimeOnly.TryParse(timeText, out var _currentValueGeneral);
-			if (!dotFormatValidResult && !colonFormatValidResult && !generalValidResult)
-			{
-				var parent = senderEntry.Parent as VerticalStackLayout;
-				Label label;
-				if (parent != null)
-				{
-					label = parent.Children.OfType<Label>().FirstOrDefault(c => c.StyleId.StartsWith(senderEntry.StyleId));
-					await DisplayAlert("Ajaj!", $"Ogitlig tid för {label.Text} '{timeText}'", "OK");
-				}
-				
-				
-			}
-			if (_currentValueDot > currentValue)
-			{
-				currentValue = _currentValueDot;
-			}
-			else if (_currentValueColon > currentValue)
-			{
-				currentValue = _currentValueColon;
-			}
-			else
-			{
-				currentValue = _currentValueGeneral;
-			}
-			switch (senderEntry.StyleId)
-			{
-				case "WorkdayStart":
-					_workDayStart = currentValue;
-					break;
-				case "LunchStart":
-					_lunchStart = currentValue;
-					break;
-				case "LunchEnd":
-					_lunchEnd = currentValue;
-					break;
-				case "WorkdayEnd":
-					_workDayEnd = currentValue;
-					break;
-				default:
-					break;
-			}
+			var firstWeekItem = new WeekItem(System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now));
+			WeekItems.Add(firstWeekItem);
+			_weekRepository.Upsert(firstWeekItem);
 		}
+		foreach (var weekItem in weekItems)
+		{
+			WeekItems.Add(weekItem);
+		}
+		base.OnNavigatedTo(args);
 	}
 
-	public void OnSubmitTimesBtnClicked(object sender, EventArgs e)
+	protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
+    {
+        WeekItems.Clear();
+        base.OnNavigatedFrom(args);
+    }
+
+
+	public void OnCreateWeekBtnClicked(object sender, EventArgs e)
 	{
-		var worktimeResult = WorktimeCalculator.Calculate(_workDayStart, _workDayEnd, _lunchStart, _lunchEnd);
+		var weekItem = new WeekItem(WeekItems.Last().WeekNumber + 1);
+		WeekItems.Add(weekItem);
+		_weekRepository.Upsert(weekItem);
+	}
 
-		var hoursWorkedText = HoursWorked.Text;
-		var res = hoursWorkedText.Split(':');
-		var timePart = $": {worktimeResult.Hours} h {worktimeResult.Minutes} min";
-		HoursWorked.Text = string.Concat(res[0], timePart);
+	public async void OnWeekSelected(object sender, SelectionChangedEventArgs args)
+	{
+		var cv = (CollectionView)sender;
+		if (cv.SelectedItem == null)
+			return;
 
-		var minutesLunchText = MinutesLunch.Text;
-		res = minutesLunchText.Split(':');
-		timePart = $": {worktimeResult.BreakMinutes} minuter";
-		MinutesLunch.Text = string.Concat(res[0], timePart);
+		if (args.CurrentSelection != null)
+		{
+			var selectedItems = args.CurrentSelection;
+			var selectedWeek = selectedItems.FirstOrDefault() as WeekItem;
+			WeekPage weekPage = new WeekPage(selectedWeek, _workdayRepository, _weekRepository);
+			await Navigation.PushAsync(weekPage);
+		}
+
+		cv.SelectedItem = null;
 	}
 }
 
