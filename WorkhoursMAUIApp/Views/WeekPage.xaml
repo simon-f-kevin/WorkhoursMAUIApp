@@ -11,10 +11,25 @@
                     SelectionChanged="OnDaySelected" >
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:DayItem">
-                            <VerticalStackLayout Margin="15">
-                                <Label Text="{Binding Name}" />
-                                <Label Text="{Binding TimeWorkedDisplayText}" />
-                            </VerticalStackLayout>
+                            <VerticalStackLayout WidthRequest="700" MaximumWidthRequest="1000">
+                                <Border Stroke="Black"
+                                        StrokeThickness="2">
+                                    <HorizontalStackLayout Spacing="15" Margin="10">
+                                        <Label Text="{Binding Name}" FontSize="18" WidthRequest="100"/>
+                                        <Rectangle Fill="Black"
+                                                    HeightRequest="30"
+                                                    WidthRequest="5" />
+                                        <Label Text="{Binding TimeWorkedDisplayText}"
+                                                FontSize="18" 
+                                                WidthRequest="200"/>
+                                        <Rectangle Fill="Black"
+                                                    HeightRequest="30"
+                                                    WidthRequest="5" />
+                                        <Label Text="{Binding BreakMinutesDisplayText}"
+                                        FontSize="18" />
+                                    </HorizontalStackLayout>
+                                </Border>
+                        </VerticalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
             </CollectionView>

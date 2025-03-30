@@ -9,7 +9,9 @@
                 x:Name="CreateWeekBtn"
                 Text="Lägg till vecka" 
                 Clicked="OnCreateWeekBtnClicked"
-                HorizontalOptions="Fill" />
+                HorizontalOptions="Fill" 
+                WidthRequest="800"
+                Margin="10"/>
             <CollectionView 
                     ItemsSource="{Binding WeekItems}"
                     SelectionMode="Single"
@@ -17,16 +19,20 @@
                     EmptyView="No weeks yet" >
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:WeekItem">
-                            <VerticalStackLayout Margin="15">
-                                <Label Text="{Binding Name}" />
-                                <Label Text="{Binding TotalHoursWorkedText}" />
+                            <VerticalStackLayout WidthRequest="700" MaximumWidthRequest="1000">
+                                <Border Stroke="Black" StrokeThickness="2">
+                                    <HorizontalStackLayout Spacing="15" Margin="10">
+                                        <Label Text="{Binding Name}" FontSize="18" />
+                                        <Rectangle Fill="Black"
+                                                    HeightRequest="30"
+                                                    WidthRequest="5" />
+                                        <Label Text="{Binding TotalHoursWorkedText}" FontSize="18"/>
+                                    </HorizontalStackLayout>
+                                </Border>
                             </VerticalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
             </CollectionView>
         </VerticalStackLayout>
-        
     </ScrollView>
-    
-
 </ContentPage>

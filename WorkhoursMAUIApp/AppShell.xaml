@@ -9,7 +9,7 @@
     Title="WorkhoursMAUIApp">
     
     <ShellContent
-            Title="Home"
+            Title="{Binding HomepageMessage}"
             ContentTemplate="{DataTemplate views:MainPage}"
             Route="MainPage" />
 </Shell>

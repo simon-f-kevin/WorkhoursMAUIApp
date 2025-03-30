@@ -21,9 +21,19 @@ public class DayItem : StorableItem
     public string LunchEnd { get; set; }
     public string WorkdayEnd { get; set; }
 
-    public string TimeWorkedDisplayText { get
+    public string TimeWorkedDisplayText
+    {
+        get
         {
             return $"{HoursWorked} timmar {MinutesWorked} minuter";
+        }
+    }
+    
+    public string BreakMinutesDisplayText
+    {
+        get
+        {
+            return $"{BreakMinutes} minuter rast";
         }
     }
 }

@@ -1,13 +1,26 @@
-﻿namespace WorkhoursMAUIApp;
+﻿using WorkhoursMAUIApp.CustomControls;
+
+namespace WorkhoursMAUIApp;
 
 public partial class App : Application
 {
 	public App()
 	{
 		InitializeComponent();
-
-		// MainPage = ;
+		Microsoft.Maui.Handlers.LabelHandler.Mapper.AppendToMapping("LabelCustomization", (handler, view) =>
+		{
+			if (view is SelectableLabel)
+			{
+#if ANDROID
+				handler.PlatformView.SetTextIsSelectable(true);
+#elif WINDOWS
+				handler.PlatformView.IsTextSelectionEnabled = true;
+		#endif
+			}
+		});
 	}
+
+	
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{

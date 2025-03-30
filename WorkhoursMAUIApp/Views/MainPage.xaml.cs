@@ -2,7 +2,6 @@
 using Windows.System;
 using WorkhoursMAUIApp.Data;
 using WorkhoursMAUIApp.Models;
-using WorkhoursMAUIApp.ViewModels;
 
 namespace WorkhoursMAUIApp.Views;
 
