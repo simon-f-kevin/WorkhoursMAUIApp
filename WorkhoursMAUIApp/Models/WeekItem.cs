@@ -15,7 +15,8 @@ public class WeekItem : StorableItem
     public int WeekNumber { get; set; }
     public string TotalHoursWorkedText { get {
             var hours = (int)TotalHours;
-            var minutes = (int)((TotalHours - hours) * 60);
+            var remaining = TotalHours - hours;
+            var minutes = Math.Round(remaining * 60);
             return $"{hours} timmar {minutes} minuter";
     } }
     public double TotalHours { get; set; }
