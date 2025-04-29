@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkhoursMAUIApp", "WorkhoursMAUIApp\WorkhoursMAUIApp.csproj", "{07B8C6E0-2843-4964-8490-8D7B29EECDA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkhoursTests", "WorkhoursTests\WorkhoursTests.csproj", "{F2C73AF6-C0B1-4748-9F4D-6C2819D1B7A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{07B8C6E0-2843-4964-8490-8D7B29EECDA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07B8C6E0-2843-4964-8490-8D7B29EECDA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07B8C6E0-2843-4964-8490-8D7B29EECDA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2C73AF6-C0B1-4748-9F4D-6C2819D1B7A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2C73AF6-C0B1-4748-9F4D-6C2819D1B7A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2C73AF6-C0B1-4748-9F4D-6C2819D1B7A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2C73AF6-C0B1-4748-9F4D-6C2819D1B7A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

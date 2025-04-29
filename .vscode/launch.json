@@ -9,7 +9,8 @@
             "type": "maui",
             "request": "launch",
             "preLaunchTask": "maui: Build",
-            // "justMyCode": "False"
+            // "justMyCode": false,
+    
         }
 
     ]
